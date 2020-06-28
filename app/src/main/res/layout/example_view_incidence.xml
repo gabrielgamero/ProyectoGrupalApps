@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Detalle de registro de incidencia"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTitleIncidenceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Nombre corto"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textViewIncidenceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Nombre corto"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleIncidenceName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleIncidenceName"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitleIncidenceName" />
+
+    <TextView
+        android:id="@+id/textViewTitleIncidenceDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Descripción"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewIncidenceName"
+        app:layout_constraintEnd_toEndOf="@+id/textViewIncidenceName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIncidenceName" />
+
+    <TextView
+        android:id="@+id/textViewIncidenceDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Descripción de la incidencia"
+        android:inputType="textMultiLine"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleIncidenceDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleIncidenceDescription" />
+
+    <TextView
+        android:id="@+id/textViewTitleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Imagen adjunta"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewIncidenceDescription"
+        app:layout_constraintEnd_toEndOf="@+id/textViewIncidenceDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIncidenceDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewCheckPhoto"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTitleImage"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleImage"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleImage"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/ic_photo" />
+
+    <TextView
+        android:id="@+id/textViewTitleLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ubicación"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitleImage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleImage"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleImage" />
+
+    <TextView
+        android:id="@+id/textViewLocationLatView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Latitud"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTitleLocation"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleLocation"
+        app:layout_constraintTop_toTopOf="@+id/textViewTitleLocation"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/textViewLocationLongView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Longitud"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewLocationLatView"
+        app:layout_constraintStart_toEndOf="@+id/textViewLocationLatView"
+        app:layout_constraintTop_toTopOf="@+id/textViewLocationLatView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleLocation" />
+
+    <TextView
+        android:id="@+id/textViewTitleIncidenceComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Comentario"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitleLocation"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleLocation"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/textViewIncidenceComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Comentario sobre la incidencia atendida"
+        android:inputType="textMultiLine"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleIncidenceComment"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleIncidenceComment" />
+
+    <Switch
+        android:id="@+id/switchSolveIncidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Atender incidencia"
+        app:layout_constraintEnd_toEndOf="@+id/textViewIncidenceComment"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewIncidenceComment"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIncidenceComment" />
+
+    <Button
+        android:id="@+id/buttonSolveIncidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Actualizar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchSolveIncidence" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
