@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "765329122531",
+    "firebase_url": "https://proyecto-grupal-apps.firebaseio.com",
+    "project_id": "proyecto-grupal-apps",
+    "storage_bucket": "proyecto-grupal-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765329122531:android:3a0afabacc6199aa61d1d6",
+        "android_client_info": {
+          "package_name": "pucp.telecom.moviles.incidencias"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765329122531-lffr94sl7f965hn5pvkj7aq93n7utofp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0tCW8YWewVYEbTKb9SauCx_GRSNItXfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765329122531-lffr94sl7f965hn5pvkj7aq93n7utofp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

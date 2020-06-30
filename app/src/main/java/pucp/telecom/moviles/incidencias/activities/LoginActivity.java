@@ -16,6 +16,7 @@ import pucp.telecom.moviles.incidencias.entities.DtoMessage;
 import pucp.telecom.moviles.incidencias.webRequests.FireUser;
 
 public class LoginActivity extends AppCompatActivity {
+    /*
     // Login fields
     EditText email;
     EditText password;
@@ -32,11 +33,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activityLogin); // activityLoginActivity
     }
 
     public void doLogin(View view) {
-        String email = ((EditText) findViewById(R.id.edittextEmail).getText().toString();
+        String email = ((EditText) findViewById(R.id.edittextEmail)).getText().toString();
         String password = ((EditText) findViewById(R.id.edittextPassword)).getText().toString();
         fireUser = new FireUser();
         fireUser.doLogin(email, password, LoginActivity.this, new CallbackInterface() {
@@ -63,5 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
+*/
 }
+
+
