@@ -49,11 +49,11 @@ public class FireUser {
                     public void onFailure(@NonNull Exception e) {
                         Log.d("msgxd", "3fail");
                         Log.d("msgxd", e.toString());
-                         if (e instanceof FirebaseAuthInvalidUserException) {
-                             callback.onComplete(new DtoMessage("Usuario no existe", -1));
-                        }else if (e instanceof FirebaseAuthInvalidCredentialsException){
-                             callback.onComplete(new DtoMessage("Password inválida", -2));
-                         }
+                        if (e instanceof FirebaseAuthInvalidUserException) {
+                            callback.onComplete(new DtoMessage("Usuario no existe", -1));
+                        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            callback.onComplete(new DtoMessage("Password inválida", -2));
+                        }
 
                     }
                 });
@@ -100,14 +100,36 @@ public class FireUser {
 
                         if (e instanceof FirebaseAuthUserCollisionException) {
                             callback.onComplete(new DtoMessage("Este correo ya está usado", -1));
-                        }else if (e instanceof FirebaseAuthWeakPasswordException){
+                        } else if (e instanceof FirebaseAuthWeakPasswordException) {
                             callback.onComplete(new DtoMessage("Password minima de 6 caracteres", -2));
-                        }else if (e instanceof FirebaseAuthInvalidCredentialsException){
+                        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
                             callback.onComplete(new DtoMessage("Correo inválido", -3));
                         }
 
 
                         callback.onComplete(new DtoMessage("Error en el registro", 0));
+                    }
+                });
+
+    }
+
+    /*
+     *  1: Enviando correo.
+     * -1: Correo inválido.
+     * */
+
+    public void sendEmailRecoverPassword(String email, Activity context, final CallbackInterface callback) {
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("msgxd", task.toString());
+                        if (task.isSuccessful()) {
+                            callback.onComplete(new DtoMessage("Enviando correo", 1));
+                        } else {
+                            callback.onComplete(new DtoMessage("Correo inválido", -1));
+                        }
                     }
                 });
 
