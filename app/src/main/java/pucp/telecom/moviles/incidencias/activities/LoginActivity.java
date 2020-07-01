@@ -2,10 +2,12 @@ package pucp.telecom.moviles.incidencias.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,10 @@ public class LoginActivity extends AppCompatActivity {
     // Login fields
     EditText email;
     EditText password;
-    // Login button
+    // Button
     Button btnLogin;
+    TextView recoverPassword;
+    TextView registerUser;
 
     // Firebase Authentication
     FireUser fireUser;
@@ -32,14 +36,33 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login); // activityLoginActivity
+
+        registerUser = findViewById(R.id.textViewRegistrar);
+        registerUser.setText(Html.fromHtml("<a href='#'>No tienes cuenta? Registrate aquí</a>")); // Darle estilo a registrar
+        registerUser.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+
+        recoverPassword = findViewById(R.id.textViewRecuperar);
+        recoverPassword.setText(Html.fromHtml("<a href='#'>Se olvidó su password? Click aquí</a>")); // Darle estilo a recuperar password.
+        recoverPassword.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(LoginActivity.this, RecoverActivity.class));
+            }
+        });
+
         btnLogin = findViewById(R.id.buttonLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 doLogin(v);
             }
         });
+
+
 
     }
 
