@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,11 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:ems="12"
-        android:hint="Correo PUCP"
+        android:hint="@string/correo_pucp"
         android:inputType="textWebEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/editTextPasswordLogin"
@@ -24,21 +24,47 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="12"
+        android:hint="@string/contrase_a"
         android:inputType="textPassword"
-        android:hint="Contraseña"
         app:layout_constraintEnd_toEndOf="@+id/editTextEmailPucpLogin"
         app:layout_constraintStart_toStartOf="@+id/editTextEmailPucpLogin"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailPucpLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailPucpLogin"
+        android:importantForAutofill="no"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Iniciar sesión"
+        android:text="@string/iniciar_sesi_n"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextPasswordLogin"
         app:layout_constraintStart_toStartOf="@+id/editTextPasswordLogin"
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordLogin"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewRegistrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="224dp"
+        android:onClick="textViewRecuperar"
+        android:text="@string/msgRegistrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <TextView
+        android:id="@+id/textViewRecuperar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:onClick="textViewRecuperar"
+        android:text="@string/msgOlvidar"
+        app:layout_constraintBottom_toTopOf="@+id/textViewRegistrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
