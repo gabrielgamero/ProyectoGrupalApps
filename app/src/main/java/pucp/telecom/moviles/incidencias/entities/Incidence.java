@@ -5,11 +5,11 @@ public class Incidence {
     private String incidenceId;
     private String incidenceName;
     private String description;
-    private String status;
     private String image;
     private String date;
     private String comment;
     private String location;
+    private String userId;
 
     public Incidence() {
     }
@@ -36,14 +36,6 @@ public class Incidence {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getImage() {
@@ -76,5 +68,13 @@ public class Incidence {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
