@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -28,6 +31,7 @@ import pucp.telecom.moviles.incidencias.entities.Incidence;
 public class ListIncidencesActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
+    private MenuItem item;
     ArrayList<Incidence> incidences = new ArrayList<>();
     private RecyclerView recyclerViewIncidences; // RecyclerView
     private ListIncidencesAdapter listIncidencesAdapter; // Adapter
@@ -46,12 +50,13 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
     // Escucha por cambios en toda la rama
     public void incidenceValueEventListener(){
-        databaseReference.child("userid1" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
+        databaseReference.child("userid2" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // cada vez que hay un cambio en Firebase
                 // dataSnapshot contiene el json (equivalente a gson.fromJson)
                 Log.d("dataSnapshotJson",dataSnapshot.getValue().toString());
 
+                incidences.clear();
                 // Iterar por todas las incidencias del JSON
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Incidence incidence = postSnapshot.getValue(Incidence.class);
@@ -115,5 +120,34 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 Toast.makeText(ListIncidencesActivity.this, "to DetailIncidenceActivity", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Inflar appbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar,menu);
+        return true;
+    }
+
+    // Al hacer clic en el botón '+' de appbar abrir CreateIncidenceActivity
+    int LAUNCH_CREATE_INCIDENCE_ACTIVITY = 1;
+    public void actionAddIncAppBar(MenuItem item){
+        Intent i = new Intent(this, CreateIncidenceActivity.class);
+        // i.putExtra("loggedusername",nombre); // extra del nombre del usuario logueado
+        startActivityForResult(i, LAUNCH_CREATE_INCIDENCE_ACTIVITY);
+    }
+
+    // Al regresar del Activity CreateIncidenceActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_CREATE_INCIDENCE_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                incidenceValueEventListener();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
