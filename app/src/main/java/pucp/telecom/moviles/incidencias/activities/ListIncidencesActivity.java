@@ -3,9 +3,13 @@ package pucp.telecom.moviles.incidencias.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,12 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pucp.telecom.moviles.incidencias.R;
+import pucp.telecom.moviles.incidencias.adapters.ListIncidencesAdapter;
 import pucp.telecom.moviles.incidencias.entities.Incidence;
 
 public class ListIncidencesActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
-    List<Incidence> incidences = new ArrayList<>();
+    ArrayList<Incidence> incidences = new ArrayList<>();
+    private RecyclerView recyclerViewIncidences; // RecyclerView
+    private ListIncidencesAdapter listIncidencesAdapter; // Adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +39,14 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        // Obtener lista completa de incidencias por usuario
-        //incidenceValueEventListener();
-
-        // Obtener solo incidencias modificadas/creadas por usuario
-        incidenceChildEventListener();
+        incidenceValueEventListener(); // Obtener lista completa de incidencias por usuario
+        // incidenceChildEventListener(); // Obtener solo incidencias modificadas/creadas por usuario
+        // buildIncidenceRecyclerView();
     }
 
     // Escucha por cambios en toda la rama
     public void incidenceValueEventListener(){
-        databaseReference.child("abcde01" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
+        databaseReference.child("userid1" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // cada vez que hay un cambio en Firebase
                 // dataSnapshot contiene el json (equivalente a gson.fromJson)
@@ -55,8 +60,8 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
                     incidences.add(incidence);  // agregar todas las incidencias a un arreglo
                     Log.d("incidenceNamesFromArray",incidences.get(incidences.indexOf(incidence)).getIncidenceName()); // imprimir desde un List
-
                 }
+                buildIncidenceRecyclerView();
             }
 
             @Override
@@ -77,7 +82,6 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                // Iterar por todas las incidencias del JSON
                 Incidence incidence = dataSnapshot.getValue(Incidence.class);
                 Log.d("incidenceChanged",incidence.getIncidenceName());
             }
@@ -99,4 +103,17 @@ public class ListIncidencesActivity extends AppCompatActivity {
         });
     }
 
+    public void buildIncidenceRecyclerView(){
+        listIncidencesAdapter = new ListIncidencesAdapter(incidences, ListIncidencesActivity.this);
+        recyclerViewIncidences = findViewById(R.id.recyclerViewIncidences);
+        recyclerViewIncidences.setAdapter(listIncidencesAdapter);
+        recyclerViewIncidences.setLayoutManager(new LinearLayoutManager(ListIncidencesActivity.this));
+
+        listIncidencesAdapter.setOnItemClickListener(new ListIncidencesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(ListIncidencesActivity.this, "to DetailIncidenceActivity", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

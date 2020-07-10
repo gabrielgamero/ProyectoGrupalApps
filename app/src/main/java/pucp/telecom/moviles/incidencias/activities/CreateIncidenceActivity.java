@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 import pucp.telecom.moviles.incidencias.R;
@@ -60,13 +61,17 @@ public class CreateIncidenceActivity extends AppCompatActivity {
          */
 
         // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
-        String userid = "abcde01";
+        String userid = "userid2";
 
         // Configuración de parámetros de la Incidencia
         incidence.setIncidenceName(((EditText) findViewById(R.id.editTextIncidenceName)).getText().toString());
         incidence.setDescription(((EditText) findViewById(R.id.editTextIncidenceDescription)).getText().toString());
         incidence.setImage("image1");
-        incidence.setDate("27/05/2020");
+
+        // Configurar Fecha
+        Calendar calendar = Calendar.getInstance();
+        incidence.setDate(calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.YEAR));
+
         incidence.setComment("Se encontró que el foco estaba quemado por tiempo de uso");
         incidence.setLocation("xyz o latitud+longitud");
 
@@ -78,15 +83,13 @@ public class CreateIncidenceActivity extends AppCompatActivity {
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    // si se guardó exitosamente
-                    Log.d("incidenceSaveSuccess","Guardado de incidencia exitoso");
+                    Log.d("incidenceSaveSuccess","Guardado de incidencia exitoso"); // si se guardó exitosamente
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    // si hubo error al guardar
-                    Log.e("incidenceSaveFail","Guardado de incidencia fallido",e.getCause());
+                    Log.e("incidenceSaveFail","Guardado de incidencia fallido",e.getCause()); // si hubo error al guardar
                 }
             });
     }

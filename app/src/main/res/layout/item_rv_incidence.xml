@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textViewIncidenceName"
+        android:id="@+id/incNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="textViewIncidenceNametextViewIncidenceName"
+        android:text="incNameTextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iconLayout"
@@ -29,19 +29,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginEnd="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewDate"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewIncidenceName"
-        app:layout_constraintTop_toTopOf="@+id/textViewIncidenceName">
+        app:layout_constraintEnd_toStartOf="@+id/incDateTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/incNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/incNameTextView">
 
         <ImageView
-            android:id="@+id/imageViewInProgress"
+            android:id="@+id/inProgressImageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_timelapse" />
 
         <ImageView
-            android:id="@+id/imageViewSolved"
+            android:id="@+id/solvedImageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="invisible"
@@ -49,14 +49,14 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textViewDate"
+        android:id="@+id/incDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="XX/YY/ZZZZ"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewIncidenceName"
+        app:layout_constraintBottom_toBottomOf="@+id/incNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewIncidenceName" />
+        app:layout_constraintTop_toTopOf="@+id/incNameTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
