@@ -68,13 +68,14 @@ public class CreateIncidenceActivity extends AppCompatActivity {
         // Configuración de parámetros de la Incidencia
         incidence.setIncidenceName(((EditText) findViewById(R.id.editTextIncidenceName)).getText().toString());
         incidence.setDescription(((EditText) findViewById(R.id.editTextIncidenceDescription)).getText().toString());
-        incidence.setImage("image1");
-
         // Configurar Fecha
         Calendar calendar = Calendar.getInstance();
         incidence.setDate(calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.YEAR));
+        incidence.setStatus("registrado"); // Las incidencias creadas siempre inician con en el estado "registrado"
+        incidence.setComment(""); // Al crear una incidencia este parámetro está vacío
 
-        incidence.setComment("Se encontró que el foco estaba quemado por tiempo de uso");
+        // PARAMETROS QUE FALTAN CONFIGURAR
+        incidence.setImage("image1");
         incidence.setLocation("xyz o latitud+longitud");
 
         // Guardar incidencia en DB

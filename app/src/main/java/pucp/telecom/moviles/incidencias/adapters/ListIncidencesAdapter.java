@@ -35,13 +35,15 @@ public class ListIncidencesAdapter extends RecyclerView.Adapter<ListIncidencesAd
 
     // clase ViewHolder
     public static class IncidenceViewHolder extends RecyclerView.ViewHolder{
-        public TextView incNameTextView;
-        public TextView incDateTextView;
+        public TextView incNameTextView, incDateTextView;
+        public ImageView registradoImageView, atendidoImageView;
 
         public IncidenceViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             incNameTextView = itemView.findViewById(R.id.incNameTextView);
             incDateTextView = itemView.findViewById(R.id.incDateTextView);
+            registradoImageView = itemView.findViewById(R.id.registradoImageView);
+            atendidoImageView = itemView.findViewById(R.id.atendidoImageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,9 +77,19 @@ public class ListIncidencesAdapter extends RecyclerView.Adapter<ListIncidencesAd
         Incidence i = incidencesList.get(position);
         String incName = i.getIncidenceName();
         String incDate = i.getDate();
+        String incStatus = i.getStatus();
 
         holder.incNameTextView.setText(incName);
         holder.incDateTextView.setText(incDate);
+
+        // Configuración de íconos de registrado o atendido de incidencias
+        if(incStatus.equals("registrado")){
+            holder.registradoImageView.setVisibility(View.VISIBLE);
+            holder.atendidoImageView.setVisibility(View.INVISIBLE);
+        }else{
+            holder.registradoImageView.setVisibility(View.INVISIBLE);
+            holder.atendidoImageView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

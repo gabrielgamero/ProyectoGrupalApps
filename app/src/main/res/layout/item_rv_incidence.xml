@@ -34,14 +34,14 @@
         app:layout_constraintTop_toTopOf="@+id/incNameTextView">
 
         <ImageView
-            android:id="@+id/inProgressImageView"
+            android:id="@+id/registradoImageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_timelapse" />
 
         <ImageView
-            android:id="@+id/solvedImageView"
+            android:id="@+id/atendidoImageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="invisible"
