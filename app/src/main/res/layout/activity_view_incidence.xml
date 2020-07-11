@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activities.ViewIncidenceActivity">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -148,8 +148,8 @@
         app:layout_constraintStart_toStartOf="@+id/textViewTitleLocation"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-    <TextView
-        android:id="@+id/textViewIncidenceComment"
+    <EditText
+        android:id="@+id/editTextIncidenceComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -168,10 +168,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Atender incidencia"
-        app:layout_constraintEnd_toEndOf="@+id/textViewIncidenceComment"
+        app:layout_constraintEnd_toEndOf="@+id/editTextIncidenceComment"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textViewIncidenceComment"
-        app:layout_constraintTop_toBottomOf="@+id/textViewIncidenceComment" />
+        app:layout_constraintStart_toStartOf="@+id/editTextIncidenceComment"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIncidenceComment" />
 
     <Button
         android:id="@+id/buttonSolveIncidence"
@@ -182,5 +182,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchSolveIncidence" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

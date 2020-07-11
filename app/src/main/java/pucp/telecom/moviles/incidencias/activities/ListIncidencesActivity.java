@@ -117,7 +117,14 @@ public class ListIncidencesActivity extends AppCompatActivity {
         listIncidencesAdapter.setOnItemClickListener(new ListIncidencesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(ListIncidencesActivity.this, "to DetailIncidenceActivity", Toast.LENGTH_SHORT).show();
+                Incidence incidenceSelected = incidences.get(position);
+                String incidenceIdSelected = incidenceSelected.getIncidenceId();
+                String incidenceDescriptionSelected = incidenceSelected.getDescription();
+
+                Intent intent = new Intent(ListIncidencesActivity.this,ViewIncidenceActivity.class);
+                intent.putExtra("incidenceIdSelected",incidenceIdSelected);
+                intent.putExtra("incidenceDescriptionSelected",incidenceDescriptionSelected);
+                startActivity(intent);
             }
         });
     }
