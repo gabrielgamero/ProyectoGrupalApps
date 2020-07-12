@@ -61,6 +61,8 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         textViewIncidenceName.setText(incidenceNameSelected);
         textViewIncidenceDescription.setText(incidenceDescriptionSelected);
 
+        incidenceStatus = incidenceStatusSelected; // inicializamos el valor del estado de la incidencia según lo que se haya recibido de ListIncidencesActivity
+
         // Configurar estado inicial de la incidencia
         switchAttendIncidence = (Switch) findViewById(R.id.switchAttendIncidence);
         if(incidenceStatusSelected.equals("atendido")){
