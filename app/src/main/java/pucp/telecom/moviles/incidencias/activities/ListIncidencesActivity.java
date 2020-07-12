@@ -36,6 +36,9 @@ public class ListIncidencesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewIncidences; // RecyclerView
     private ListIncidencesAdapter listIncidencesAdapter; // Adapter
 
+    int LAUNCH_CREATE_INCIDENCE_ACTIVITY = 1;
+    int LAUNCH_VIEW_INCIDENCE_ACTIVITY = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,12 +122,19 @@ public class ListIncidencesActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Incidence incidenceSelected = incidences.get(position);
                 String incidenceIdSelected = incidenceSelected.getIncidenceId();
+                String incidenceNameSelected = incidenceSelected.getIncidenceName();
                 String incidenceDescriptionSelected = incidenceSelected.getDescription();
+                String incidenceStatusSelected = incidenceSelected.getStatus();
+                String incidenceCommentSelected = incidenceSelected.getComment();
 
                 Intent intent = new Intent(ListIncidencesActivity.this,ViewIncidenceActivity.class);
                 intent.putExtra("incidenceIdSelected",incidenceIdSelected);
+                intent.putExtra("incidenceNameSelected",incidenceNameSelected);
                 intent.putExtra("incidenceDescriptionSelected",incidenceDescriptionSelected);
-                startActivity(intent);
+                intent.putExtra("incidenceStatusSelected",incidenceStatusSelected);
+                intent.putExtra("incidenceCommentSelected",incidenceCommentSelected);
+
+                startActivityForResult(intent, LAUNCH_VIEW_INCIDENCE_ACTIVITY);
             }
         });
     }
@@ -137,7 +147,6 @@ public class ListIncidencesActivity extends AppCompatActivity {
     }
 
     // Al hacer clic en el botón '+' de appbar abrir CreateIncidenceActivity
-    int LAUNCH_CREATE_INCIDENCE_ACTIVITY = 1;
     public void actionAddIncAppBar(MenuItem item){
         Intent i = new Intent(this, CreateIncidenceActivity.class);
         // i.putExtra("loggedusername",nombre); // extra del nombre del usuario logueado
@@ -153,7 +162,16 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 incidenceValueEventListener();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == LAUNCH_VIEW_INCIDENCE_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                incidenceValueEventListener();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
             }
         }
     }
