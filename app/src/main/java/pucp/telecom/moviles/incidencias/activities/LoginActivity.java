@@ -1,5 +1,6 @@
 package pucp.telecom.moviles.incidencias.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -10,8 +11,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import pucp.telecom.moviles.incidencias.CallbackInterface;
@@ -25,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     // Button
     Button btnLogin;
-    TextView recoverPassword;
     TextView registerUser;
 
     // Firebase Authentication
@@ -34,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     // Dtos
     DtoMessage dtoMessage;
 
+
+    int LAUNCH_CREATE_INCIDENCE_ACTIVITY = 1;
+    int LAUNCH_VIEW_INCIDENCE_ACTIVITY = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         registerUser.setText(Html.fromHtml("<a href='#'>No tienes cuenta? Registrate aquí</a>")); // Darle estilo a registrar
         registerUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
-
-
-        recoverPassword = findViewById(R.id.textViewRecuperar);
-        recoverPassword.setText(Html.fromHtml("<a href='#'>Se olvidó su password? Click aquí</a>")); // Darle estilo a recuperar password.
-        recoverPassword.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RecoverActivity.class));
+                //Log.d("mgsxd", "estoy acaa");
+                startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class), LAUNCH_VIEW_INCIDENCE_ACTIVITY);
             }
         });
 
@@ -68,43 +68,54 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void doLogin(View view) {
-        Log.d("msgxd", "1");
+        //Log.d("msgxd", "1");
         String email = ((EditText) findViewById(R.id.editTextEmailPucpLogin)).getText().toString();
         String password = ((EditText) findViewById(R.id.editTextPasswordLogin)).getText().toString();
         fireUser = new FireUser();
         fireUser.doLogin(email, password, LoginActivity.this, new CallbackInterface() {
             @Override
             public void onComplete(Object result) {
-                Log.d("msgxd", "4");
+                //  Log.d("msgxd", "4");
                 dtoMessage = (DtoMessage) result;
                 int status = dtoMessage.getStatus();
                 String message = dtoMessage.getMessage();
-                Log.d("msgxd", "status:" + status);
+                //Log.d("msgxd", "status:" + status);
                 switch (status) {
                     case 1:
                         // Redirigir el acceso a su respectiva pagina
-                        Log.d("msgxd", "5ok");
-                        FirebaseUser firebaseUser = (FirebaseUser) dtoMessage.getObject();
-                        Intent intent = new Intent(LoginActivity.this, ListIncidencesActivity.class);
+                        //Log.d("msgxd", "5ok");
+                        FirebaseAuth mAuth = (FirebaseAuth) dtoMessage.getObject();
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser.isEmailVerified()) {
 
-                        String[] nombreUsuario_rol = firebaseUser.getDisplayName().split("-s");
-                        String nombreUsuario = nombreUsuario_rol[0];
-                        String rol = nombreUsuario_rol[1];
 
-                        intent.putExtra("rol", rol);
-                        intent.putExtra("nombreUsuario", nombreUsuario);
-                        intent.putExtra("userid", firebaseUser.getUid());
+                            Intent intent = new Intent(LoginActivity.this, ListIncidencesActivity.class);
+                            //Log.d("msgxd", "UseName: " + firebaseUser.getDisplayName());
+                            String[] nombreUsuario_rol = firebaseUser.getDisplayName().split("-");
+                            //Log.d("msgxd", nombreUsuario_rol.toString());
+                            String nombreUsuario = nombreUsuario_rol[0];
+                            String rol = nombreUsuario_rol[1];
 
-                        startActivity(intent);
+                            intent.putExtra("rol", rol);
+                            intent.putExtra("nombreUsuario", nombreUsuario);
+                            intent.putExtra("userId", firebaseUser.getUid());
+
+                            Log.d("msgxd", "aea" + rol + nombreUsuario + firebaseUser.getUid());
+                            startActivity(intent);
+                        } else {
+
+                            mAuth.signOut();
+                            message = "Debe confirmar su correo.";
+                        }
 
                         break;
                     case -1:
                     case -2:
-                        Log.d("msgxd", "5err");
+                  //      Log.d("msgxd", "5err");
                         // Mostrar mensaje de error.
                         break;
                 }
-                Log.d("msgxd", "6to");
+                //Log.d("msgxd", "6to");
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
 
             }
@@ -113,4 +124,28 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    // Al regresar del Register
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_CREATE_INCIDENCE_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+
+            }
+
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == LAUNCH_VIEW_INCIDENCE_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "Activar su cuenta via correo", Toast.LENGTH_LONG).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

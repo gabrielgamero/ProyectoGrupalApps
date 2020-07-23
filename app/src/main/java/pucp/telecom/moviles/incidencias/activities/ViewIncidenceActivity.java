@@ -37,14 +37,28 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_incidence);
 
+        String rol;
+
+
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
+        if (extras != null) {
             // Obtener el extra enviado del Activity que ha abierto esta actividad (ListChildElementsActivity, CreateFolderActivity y CreateBookmarkActivity)
             incidenceIdSelected = extras.getString("incidenceIdSelected");
             incidenceNameSelected = extras.getString("incidenceNameSelected");
             incidenceDescriptionSelected = extras.getString("incidenceDescriptionSelected");
             incidenceStatusSelected = extras.getString("incidenceStatusSelected");
             incidenceCommentSelected = extras.getString("incidenceCommentSelected");
+            rol = extras.getString("rol");
+            if (rol.equalsIgnoreCase("U")) {
+                //textViewTitleIncidenceComment
+                //editTextIncidenceComment
+                //switchAttendIncidence
+                //buttonSolveIncidence
+                findViewById(R.id.textViewTitleIncidenceComment).setVisibility(View.GONE);
+                findViewById(R.id.editTextIncidenceComment).setVisibility(View.GONE);
+                findViewById(R.id.switchAttendIncidence).setVisibility(View.GONE);
+                findViewById(R.id.buttonSolveIncidence).setVisibility(View.GONE);
+            }
         }
 
         setIncidenceValues(); // Configurar valores pasados de ListIncidencesActivity
@@ -53,7 +67,7 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     }
 
     // Configurar valores pasados de ListIncidencesActivity
-    public void setIncidenceValues(){
+    public void setIncidenceValues() {
         TextView textViewIncidenceName = findViewById(R.id.textViewIncidenceName);
         TextView textViewIncidenceDescription = findViewById(R.id.textViewIncidenceDescription);
         editTextIncidenceComment = findViewById(R.id.editTextIncidenceComment);
@@ -65,27 +79,27 @@ public class ViewIncidenceActivity extends AppCompatActivity {
 
         // Configurar estado inicial de la incidencia
         switchAttendIncidence = (Switch) findViewById(R.id.switchAttendIncidence);
-        if(incidenceStatusSelected.equals("atendido")){
+        if (incidenceStatusSelected.equals("atendido")) {
             switchAttendIncidence.setChecked(true);
             editTextIncidenceComment.setEnabled(true);
             editTextIncidenceComment.setText(incidenceCommentSelected);
-        }else{
+        } else {
             switchAttendIncidence.setChecked(false);
             editTextIncidenceComment.setEnabled(false);
         }
     }
 
     // Switch para cambiar estado de incidencia entre "registrado" y "atendido"
-    public void switchStatusIncidence(){
+    public void switchStatusIncidence() {
         switchAttendIncidence.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     editTextIncidenceComment.setEnabled(true);
                     editTextIncidenceComment.setHint("Ingresar comentario");
                     incidenceStatus = "atendido";
                     Toast.makeText(ViewIncidenceActivity.this, "isChecked", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     editTextIncidenceComment.setEnabled(false);
                     editTextIncidenceComment.setHint("Atender incidencia para comentar");
                     incidenceStatus = "registrado";
@@ -96,11 +110,11 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     }
 
     // Atender incidencia
-    public void attendIncidence(View view){
+    public void attendIncidence(View view) {
         // Configuración de parámetros de la Incidencia
         String incidenceComment;
 
-        if (incidenceStatus.equals("atendido")){ // ERROR DE INICIALIZACIÓN DEL ESTADO DEL SWITCH
+        if (incidenceStatus.equals("atendido")) { // ERROR DE INICIALIZACIÓN DEL ESTADO DEL SWITCH
             incidenceComment = editTextIncidenceComment.getText().toString();
         } else {
             incidenceComment = "";
@@ -117,9 +131,9 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     }
 
     // Volver al Activity que abrió esta Activity mediante un Intent
-    public void intentListIncidences(){
+    public void intentListIncidences() {
         Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_OK,returnIntent);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 

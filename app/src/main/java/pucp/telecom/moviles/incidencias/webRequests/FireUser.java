@@ -42,7 +42,7 @@ public class FireUser {
                         Log.d("msgxd", "3succ");
                         Log.d("msgxd", mAuth.getCurrentUser().getEmail());
 
-                        callback.onComplete(new DtoMessage("Ingreso exitoso", 1, (FirebaseUser) mAuth.getCurrentUser()  ));
+                        callback.onComplete(new DtoMessage("Ingreso exitoso", 1, (FirebaseAuth) mAuth ));
                     }
                 })
                 .addOnFailureListener(context, new OnFailureListener() {
@@ -76,18 +76,18 @@ public class FireUser {
                     public void onSuccess(AuthResult authResult) {
                         // Actualizar al usuario con su codigo pucp y su rol.
                         Log.d("msgxd", "3succ");
-                        FirebaseUser user = mAuth.getCurrentUser();
+                        final FirebaseUser user = mAuth.getCurrentUser();
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(pucpCode + "-U")
+                                .setDisplayName(pucpCode + "-A")
                                 .build();
                         user.updateProfile(profileUpdates)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.d("msgxd", "3succupda");
+                                            Log.d("msgxd", "estoyaca!!!!");
                                             Log.d("msgxd", mAuth.getCurrentUser().getDisplayName());
-                                            callback.onComplete(new DtoMessage("Usuario registrado", 1));
+                                            callback.onComplete(new DtoMessage("Usuario registrado", 1,(FirebaseAuth) mAuth));
                                         }
                                     }
                                 });
