@@ -1,15 +1,19 @@
 package pucp.telecom.moviles.incidencias.entities;
 
-public class Incidence {
+import java.io.Serializable;
+
+public class Incidence implements Serializable {
 
     private String incidenceId;
     private String incidenceName;
     private String description;
-    private String status;
     private String image;
     private String date;
     private String comment;
     private String location;
+    private String userId;
+    private String status;
+
 
     public Incidence() {
     }
@@ -36,14 +40,6 @@ public class Incidence {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getImage() {
@@ -76,5 +72,21 @@ public class Incidence {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 }

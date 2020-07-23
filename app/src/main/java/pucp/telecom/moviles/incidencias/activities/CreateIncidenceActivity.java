@@ -25,11 +25,13 @@ public class CreateIncidenceActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_incidence);
-
+        Intent intent = getIntent(); // Get serializable intent data
+        userId = (String) intent.getSerializableExtra("userId");
         // Variable con conexión a rama raíz (proyecto-grupal-apps/)
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
@@ -64,6 +66,7 @@ public class CreateIncidenceActivity extends AppCompatActivity {
 
         // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
         String userid = "userid2";
+        userid = userId;
 
         // Configuración de parámetros de la Incidencia
         incidence.setIncidenceName(((EditText) findViewById(R.id.editTextIncidenceName)).getText().toString());
