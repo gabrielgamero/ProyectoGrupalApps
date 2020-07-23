@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.ViewIncidenceActivity"></activity>
+        <activity android:name=".activities.ListIncidencesActivity">
         <activity android:name=".activities.RecoverActivity" />
         <activity android:name=".activities.ListIncidencesActivity"/>
         <activity android:name=".activities.LoginActivity">

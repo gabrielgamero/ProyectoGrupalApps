@@ -3,10 +3,16 @@ package pucp.telecom.moviles.incidencias.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,12 +25,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pucp.telecom.moviles.incidencias.R;
+import pucp.telecom.moviles.incidencias.adapters.ListIncidencesAdapter;
 import pucp.telecom.moviles.incidencias.entities.Incidence;
 
 public class ListIncidencesActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
-    List<Incidence> incidences = new ArrayList<>();
+    private MenuItem item;
+    ArrayList<Incidence> incidences = new ArrayList<>();
+    private RecyclerView recyclerViewIncidences; // RecyclerView
+    private ListIncidencesAdapter listIncidencesAdapter; // Adapter
+
+    int LAUNCH_CREATE_INCIDENCE_ACTIVITY = 1;
+    int LAUNCH_VIEW_INCIDENCE_ACTIVITY = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +46,20 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        // Obtener lista completa de incidencias por usuario
-        Intent intent = getIntent(); // Get serializable intent data
-        String userId = (String) intent.getSerializableExtra("userid");
-        String rol =  (String) intent.getSerializableExtra("rol");
-        //incidenceValueEventListener();
-
-        // Obtener solo incidencias modificadas/creadas por usuario
-        incidenceChildEventListener(userId);
+        incidenceValueEventListener(); // Obtener lista completa de incidencias por usuario
+        // incidenceChildEventListener(); // Obtener solo incidencias modificadas/creadas por usuario
+        // buildIncidenceRecyclerView();
     }
 
     // Escucha por cambios en toda la rama
     public void incidenceValueEventListener(){
-        databaseReference.child("abcde01" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
+        databaseReference.child("userid2" + "/incidences/").addValueEventListener(new ValueEventListener() { // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // cada vez que hay un cambio en Firebase
                 // dataSnapshot contiene el json (equivalente a gson.fromJson)
                 Log.d("dataSnapshotJson",dataSnapshot.getValue().toString());
 
+                incidences.clear();
                 // Iterar por todas las incidencias del JSON
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Incidence incidence = postSnapshot.getValue(Incidence.class);
@@ -59,8 +68,8 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
                     incidences.add(incidence);  // agregar todas las incidencias a un arreglo
                     Log.d("incidenceNamesFromArray",incidences.get(incidences.indexOf(incidence)).getIncidenceName()); // imprimir desde un List
-
                 }
+                buildIncidenceRecyclerView();
             }
 
             @Override
@@ -71,8 +80,8 @@ public class ListIncidencesActivity extends AppCompatActivity {
     }
 
     // Escucha por cambios solo en los hijos
-    public void incidenceChildEventListener(String userId){
-        databaseReference.child(userId + "/incidences/").addChildEventListener(new ChildEventListener() {
+    public void incidenceChildEventListener(){
+        databaseReference.child("abcde01" + "/incidences/").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Incidence incidence = dataSnapshot.getValue(Incidence.class);
@@ -81,7 +90,6 @@ public class ListIncidencesActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                // Iterar por todas las incidencias del JSON
                 Incidence incidence = dataSnapshot.getValue(Incidence.class);
                 Log.d("incidenceChanged",incidence.getIncidenceName());
             }
@@ -103,4 +111,68 @@ public class ListIncidencesActivity extends AppCompatActivity {
         });
     }
 
+    public void buildIncidenceRecyclerView(){
+        listIncidencesAdapter = new ListIncidencesAdapter(incidences, ListIncidencesActivity.this);
+        recyclerViewIncidences = findViewById(R.id.recyclerViewIncidences);
+        recyclerViewIncidences.setAdapter(listIncidencesAdapter);
+        recyclerViewIncidences.setLayoutManager(new LinearLayoutManager(ListIncidencesActivity.this));
+
+        listIncidencesAdapter.setOnItemClickListener(new ListIncidencesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Incidence incidenceSelected = incidences.get(position);
+                String incidenceIdSelected = incidenceSelected.getIncidenceId();
+                String incidenceNameSelected = incidenceSelected.getIncidenceName();
+                String incidenceDescriptionSelected = incidenceSelected.getDescription();
+                String incidenceStatusSelected = incidenceSelected.getStatus();
+                String incidenceCommentSelected = incidenceSelected.getComment();
+
+                Intent intent = new Intent(ListIncidencesActivity.this,ViewIncidenceActivity.class);
+                intent.putExtra("incidenceIdSelected",incidenceIdSelected);
+                intent.putExtra("incidenceNameSelected",incidenceNameSelected);
+                intent.putExtra("incidenceDescriptionSelected",incidenceDescriptionSelected);
+                intent.putExtra("incidenceStatusSelected",incidenceStatusSelected);
+                intent.putExtra("incidenceCommentSelected",incidenceCommentSelected);
+
+                startActivityForResult(intent, LAUNCH_VIEW_INCIDENCE_ACTIVITY);
+            }
+        });
+    }
+
+    // Inflar appbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar,menu);
+        return true;
+    }
+
+    // Al hacer clic en el botón '+' de appbar abrir CreateIncidenceActivity
+    public void actionAddIncAppBar(MenuItem item){
+        Intent i = new Intent(this, CreateIncidenceActivity.class);
+        // i.putExtra("loggedusername",nombre); // extra del nombre del usuario logueado
+        startActivityForResult(i, LAUNCH_CREATE_INCIDENCE_ACTIVITY);
+    }
+
+    // Al regresar del Activity CreateIncidenceActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LAUNCH_CREATE_INCIDENCE_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                incidenceValueEventListener();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == LAUNCH_VIEW_INCIDENCE_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                incidenceValueEventListener();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Toast.makeText(this, "onActivityResult RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
