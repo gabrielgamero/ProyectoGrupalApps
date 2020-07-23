@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import pucp.telecom.moviles.incidencias.CallbackInterface;
 import pucp.telecom.moviles.incidencias.R;
 import pucp.telecom.moviles.incidencias.entities.DtoMessage;
@@ -40,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
         registerUser = findViewById(R.id.textViewRegistrar);
         registerUser.setText(Html.fromHtml("<a href='#'>No tienes cuenta? Registrate aquí</a>")); // Darle estilo a registrar
-        registerUser.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        registerUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
@@ -49,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
 
         recoverPassword = findViewById(R.id.textViewRecuperar);
         recoverPassword.setText(Html.fromHtml("<a href='#'>Se olvidó su password? Click aquí</a>")); // Darle estilo a recuperar password.
-        recoverPassword.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        recoverPassword.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RecoverActivity.class));
             }
         });
@@ -61,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
                 doLogin(v);
             }
         });
-
 
 
     }
@@ -83,7 +84,19 @@ public class LoginActivity extends AppCompatActivity {
                     case 1:
                         // Redirigir el acceso a su respectiva pagina
                         Log.d("msgxd", "5ok");
-                        //startActivity(new Intent(LoginActivity.this, IncidenceActivity.class));
+                        FirebaseUser firebaseUser = (FirebaseUser) dtoMessage.getObject();
+                        Intent intent = new Intent(LoginActivity.this, ListIncidencesActivity.class);
+
+                        String[] nombreUsuario_rol = firebaseUser.getDisplayName().split("-s");
+                        String nombreUsuario = nombreUsuario_rol[0];
+                        String rol = nombreUsuario_rol[1];
+
+                        intent.putExtra("rol", rol);
+                        intent.putExtra("nombreUsuario", nombreUsuario);
+                        intent.putExtra("userid", firebaseUser.getUid());
+
+                        startActivity(intent);
+
                         break;
                     case -1:
                     case -2:

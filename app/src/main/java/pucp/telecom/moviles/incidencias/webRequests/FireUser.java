@@ -41,7 +41,8 @@ public class FireUser {
                     public void onSuccess(AuthResult authResult) {
                         Log.d("msgxd", "3succ");
                         Log.d("msgxd", mAuth.getCurrentUser().getEmail());
-                        callback.onComplete(new DtoMessage("Ingreso exitoso", 1));
+
+                        callback.onComplete(new DtoMessage("Ingreso exitoso", 1, (FirebaseUser) mAuth.getCurrentUser()  ));
                     }
                 })
                 .addOnFailureListener(context, new OnFailureListener() {

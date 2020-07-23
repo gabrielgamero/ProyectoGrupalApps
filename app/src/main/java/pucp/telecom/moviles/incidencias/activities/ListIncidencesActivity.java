@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -33,10 +34,13 @@ public class ListIncidencesActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // Obtener lista completa de incidencias por usuario
+        Intent intent = getIntent(); // Get serializable intent data
+        String userId = (String) intent.getSerializableExtra("userid");
+        String rol =  (String) intent.getSerializableExtra("rol");
         //incidenceValueEventListener();
 
         // Obtener solo incidencias modificadas/creadas por usuario
-        incidenceChildEventListener();
+        incidenceChildEventListener(userId);
     }
 
     // Escucha por cambios en toda la rama
@@ -67,8 +71,8 @@ public class ListIncidencesActivity extends AppCompatActivity {
     }
 
     // Escucha por cambios solo en los hijos
-    public void incidenceChildEventListener(){
-        databaseReference.child("abcde01" + "/incidences/").addChildEventListener(new ChildEventListener() {
+    public void incidenceChildEventListener(String userId){
+        databaseReference.child(userId + "/incidences/").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Incidence incidence = dataSnapshot.getValue(Incidence.class);
