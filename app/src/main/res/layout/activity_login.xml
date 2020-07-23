@@ -10,13 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
+        android:autofillHints=""
         android:ems="12"
         android:hint="@string/correo_pucp"
         android:inputType="textWebEmailAddress"
+        android:text="julio.rodriguezo@pucp.pe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPasswordLogin"
@@ -44,27 +45,15 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordLogin"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <TextView
         android:id="@+id/textViewRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
-        android:onClick="textViewRecuperar"
         android:text="@string/msgRegistrar"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
-
-    <TextView
-        android:id="@+id/textViewRecuperar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:onClick="textViewRecuperar"
-        android:text="@string/msgOlvidar"
-        app:layout_constraintBottom_toTopOf="@+id/textViewRegistrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
