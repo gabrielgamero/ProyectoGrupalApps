@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -182,6 +183,7 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 String incidenceDescriptionSelected = incidenceSelected.getDescription();
                 String incidenceStatusSelected = incidenceSelected.getStatus();
                 String incidenceCommentSelected = incidenceSelected.getComment();
+                String incidenceOwnerSelected = incidenceSelected.getUserId();
 
                 Intent intent = new Intent(ListIncidencesActivity.this, ViewIncidenceActivity.class);
                 intent.putExtra("incidenceIdSelected", incidenceIdSelected);
@@ -191,6 +193,7 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 intent.putExtra("incidenceCommentSelected", incidenceCommentSelected);
 
                 intent.putExtra("rol", rol);
+                intent.putExtra("incidenceOwnerSelected", incidenceOwnerSelected);
 
                 startActivityForResult(intent, LAUNCH_VIEW_INCIDENCE_ACTIVITY);
             }
@@ -210,6 +213,15 @@ public class ListIncidencesActivity extends AppCompatActivity {
         i.putExtra("userId", userId);
         // i.putExtra("loggedusername",nombre); // extra del nombre del usuario logueado
         startActivityForResult(i, LAUNCH_CREATE_INCIDENCE_ACTIVITY);
+    }
+
+    // Appbar: logout
+    public void actionLogoutAppBar(MenuItem item) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     // Al regresar del Activity CreateIncidenceActivity

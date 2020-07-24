@@ -6,4 +6,9 @@
         android:onClick="actionAddIncAppBar"
         android:title="Add Publication"
         app:showAsAction="always" />
+    <item
+        android:icon="@drawable/ic_logout"
+        android:onClick="actionLogoutAppBar"
+        android:title="Add Publication"
+        app:showAsAction="always" />
 </menu>
