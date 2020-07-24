@@ -83,12 +83,13 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         TextView textViewIncidenceName = findViewById(R.id.textViewIncidenceName);
         TextView textViewIncidenceDescription = findViewById(R.id.textViewIncidenceDescription);
         editTextIncidenceComment = findViewById(R.id.editTextIncidenceComment);
-        ImageView imageView = findViewById(R.id.imageViewAttachPhoto);
+        ImageView imageView = findViewById(R.id.imageViewCheckPhoto);
 
         textViewIncidenceName.setText(incidenceNameSelected);
         textViewIncidenceDescription.setText(incidenceDescriptionSelected);
 
         //Aplicamos glide para cargar las imagen de la incidencia en memoria.
+        Log.d("verificar",incidenceIdSelected);
         StorageReference imageRef = storageRef.child("incidences/"+incidenceIdSelected);
         Glide.with(this)
                 .load(imageRef)

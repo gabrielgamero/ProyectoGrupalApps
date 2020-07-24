@@ -139,7 +139,7 @@ public class CreateIncidenceActivity extends AppCompatActivity {
         byte [] data = baos.toByteArray();
 
 
-        StorageReference imageIncidence = storageReference.child("indicences/"+incidenceId);
+        StorageReference imageIncidence = storageReference.child("incidences/"+incidenceId);
         StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("userId",userId).build();
 
         UploadTask uploadTask = imageIncidence.putBytes(data,metadata);
