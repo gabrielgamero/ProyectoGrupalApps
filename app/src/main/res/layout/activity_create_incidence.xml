@@ -45,7 +45,7 @@
         android:id="@+id/textViewTitleIncidenceDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Descripción"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextIncidenceName"
@@ -55,8 +55,8 @@
 
     <EditText
         android:id="@+id/editTextIncidenceDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="383dp"
+        android:layout_height="88dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
@@ -71,7 +71,7 @@
         android:id="@+id/textViewTitleImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="Adjuntar imagen"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextIncidenceDescription"
@@ -81,24 +81,25 @@
 
     <ImageView
         android:id="@+id/imageViewAttachPhoto"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewTitleImage"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleImage"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleImage"
-        app:layout_constraintVertical_bias="0.5"
+        android:layout_width="255dp"
+        android:layout_height="238dp"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegisterIncidence"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleImage"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_add_photo" />
 
     <TextView
         android:id="@+id/textViewTitleLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="280dp"
         android:text="Ubicación"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewTitleImage"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toStartOf="@+id/textViewTitleImage"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitleImage" />
 
@@ -130,11 +131,26 @@
         android:id="@+id/buttonRegisterIncidence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:onClick="createIncidence"
         android:text="Registrar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleLocation"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Galería"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewAttachPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.303"
+        app:layout_constraintStart_toEndOf="@+id/textViewTitleImage"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIncidenceDescription"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

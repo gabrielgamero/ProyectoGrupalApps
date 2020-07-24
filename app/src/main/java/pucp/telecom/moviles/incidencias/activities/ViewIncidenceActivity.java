@@ -5,19 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 
@@ -31,6 +36,9 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     EditText editTextIncidenceComment;
     Switch switchAttendIncidence;
     String incidenceStatus;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +79,17 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         TextView textViewIncidenceName = findViewById(R.id.textViewIncidenceName);
         TextView textViewIncidenceDescription = findViewById(R.id.textViewIncidenceDescription);
         editTextIncidenceComment = findViewById(R.id.editTextIncidenceComment);
+        ImageView imageView = findViewById(R.id.imageViewAttachPhoto);
 
         textViewIncidenceName.setText(incidenceNameSelected);
         textViewIncidenceDescription.setText(incidenceDescriptionSelected);
+
+        //Aplicamos glide para cargar las imagen de la incidencia en memoria.
+        StorageReference imageRef = storageRef.child("incidences/"+incidenceIdSelected);
+        Glide.with(this)
+                .load(imageRef)
+                .into(imageView);
+
 
         incidenceStatus = incidenceStatusSelected; // inicializamos el valor del estado de la incidencia según lo que se haya recibido de ListIncidencesActivity
 

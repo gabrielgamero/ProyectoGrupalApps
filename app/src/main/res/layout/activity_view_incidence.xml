@@ -81,24 +81,23 @@
 
     <ImageView
         android:id="@+id/imageViewCheckPhoto"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewTitleImage"
-        app:layout_constraintStart_toEndOf="@+id/textViewTitleImage"
-        app:layout_constraintTop_toTopOf="@+id/textViewTitleImage"
-        app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@drawable/ic_photo" />
+        android:layout_width="347dp"
+        android:layout_height="185dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTitleImage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitleImage"
+        app:srcCompat="@drawable/ic_photo"
+        tools:layout_editor_absoluteY="246dp" />
 
     <TextView
         android:id="@+id/textViewTitleLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="204dp"
         android:text="Ubicación"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewTitleImage"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.177"
         app:layout_constraintStart_toStartOf="@+id/textViewTitleImage"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitleImage" />
 
@@ -177,10 +176,11 @@
         android:id="@+id/buttonSolveIncidence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:onClick="attendIncidence"
         android:text="Actualizar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchAttendIncidence" />
 </androidx.constraintlayout.widget.ConstraintLayout>
