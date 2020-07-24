@@ -78,7 +78,7 @@ public class FireUser {
                         Log.d("msgxd", "3succ");
                         final FirebaseUser user = mAuth.getCurrentUser();
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(pucpCode + "-A")
+                                .setDisplayName(pucpCode + "-U")
                                 .build();
                         user.updateProfile(profileUpdates)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
