@@ -98,34 +98,6 @@ public class CreateIncidenceActivity extends AppCompatActivity {
     public void createIncidence(View view){
         Incidence incidence = new Incidence();
 
-        /*
-        proyecto-grupal-apps/
-            - userID1/
-                - userinfo/ (mail, password, role, name, code)
-                - incidences/
-                    - incidenceID1/ (incidenceId, incidenceName, description, status, image, date, comment, location)
-                    - incidenceID2/
-                    - incidenceID3/
-            - userID2/
-                - userinfo/
-                - incidences/
-                    - incidenceID4/
-            - userID3/
-                - userinfo/
-                - incidences/
-            - userID4/
-                - userinfo/
-                - incidences/
-                    - incidenceID5/
-                    - incidenceID6/
-                    - incidenceID7/
-                    - incidenceID8/
-         */
-
-        // Se deberá cambiar por el Id pasado por Auth (id del usuario logueado)
-        String userid = "userid2";
-        userid = userId;
-
         // Configuración de parámetros de la Incidencia
         incidence.setIncidenceName(((EditText) findViewById(R.id.editTextIncidenceName)).getText().toString());
         incidence.setDescription(((EditText) findViewById(R.id.editTextIncidenceDescription)).getText().toString());
@@ -134,13 +106,14 @@ public class CreateIncidenceActivity extends AppCompatActivity {
         incidence.setDate(calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.YEAR));
         incidence.setStatus("registrado"); // Las incidencias creadas siempre inician con en el estado "registrado"
         incidence.setComment(""); // Al crear una incidencia este parámetro está vacío
+        incidence.setUserId(userId);
 
         // PARAMETROS QUE FALTAN CONFIGURAR
         //incidence.setImage("image1");   //Esto se setea líneas más abajo.
         incidence.setLocation("xyz o latitud+longitud");
 
         // Guardar incidencia en DB
-        DatabaseReference path = databaseReference.child(userid + "/incidences/").push(); // configurar la ruta para imprimir en DB
+        DatabaseReference path = databaseReference.child(userId + "/incidences/").push(); // configurar la ruta para imprimir en DB
         String incidenceId = path.getKey(); // obtenemos el instanceId del push
         incidence.setIncidenceId(incidenceId);
         path.setValue(incidence)

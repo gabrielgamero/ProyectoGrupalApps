@@ -36,8 +36,12 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     EditText editTextIncidenceComment;
     Switch switchAttendIncidence;
     String incidenceStatus;
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+
+
+    String incidenceOwnerSelected;
 
 
     @Override
@@ -46,7 +50,6 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_incidence);
 
         String rol;
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -57,6 +60,7 @@ public class ViewIncidenceActivity extends AppCompatActivity {
             incidenceStatusSelected = extras.getString("incidenceStatusSelected");
             incidenceCommentSelected = extras.getString("incidenceCommentSelected");
             rol = extras.getString("rol");
+            incidenceOwnerSelected = extras.getString("incidenceOwnerSelected");
             if (rol.equalsIgnoreCase("U")) {
                 //textViewTitleIncidenceComment
                 //editTextIncidenceComment
@@ -136,11 +140,9 @@ public class ViewIncidenceActivity extends AppCompatActivity {
             incidenceComment = "";
         }
 
-        String userid = "userid2";
-
         // Configurar comentario ingresado por el personal de infra
-        databaseReference.child(userid + "/incidences/" + incidenceIdSelected + "/comment").setValue(incidenceComment);
-        databaseReference.child(userid + "/incidences/" + incidenceIdSelected + "/status").setValue(incidenceStatus);
+        databaseReference.child(incidenceOwnerSelected + "/incidences/" + incidenceIdSelected + "/comment").setValue(incidenceComment);
+        databaseReference.child(incidenceOwnerSelected + "/incidences/" + incidenceIdSelected + "/status").setValue(incidenceStatus);
 
         // Regresar a ListIncidencesActivity
         intentListIncidences();
