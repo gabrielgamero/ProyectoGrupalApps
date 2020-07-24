@@ -140,7 +140,7 @@ public class CreateIncidenceActivity extends AppCompatActivity {
 
 
         StorageReference imageIncidence = storageReference.child("indicences/"+incidenceId);
-        StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("userId",userid).build();
+        StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("userId",userId).build();
 
         UploadTask uploadTask = imageIncidence.putBytes(data,metadata);
 
