@@ -5,4 +5,7 @@
     <string name="correo_pucp">Correo PUCP</string>
     <string name="contrase_a">Contraseña</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="buttonMap">Enviar ubicación de incidencia</string>
+    <string name="marker_detail_latlng">(%1$.5f, %2$.5f)</string>
 </resources>

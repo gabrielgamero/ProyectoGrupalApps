@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,11 @@ public class CreateIncidenceActivity extends AppCompatActivity {
     ImageView imageView;
     Button button;
     private static final int PICK_IMAGE = 100;
+    private static final int MAPS_CODE=5;
     Uri imageUri;
+    Button buttonMaps;
+    String latitud;
+    String longitud;
 
 
 
@@ -73,6 +78,18 @@ public class CreateIncidenceActivity extends AppCompatActivity {
             }
         });
 
+        //Definimos setOnClickListerner para el btn que abrirá maps
+        buttonMaps = (Button)findViewById(R.id.buttonMaps);
+        buttonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMaps = new Intent(CreateIncidenceActivity.this,MapsActivity.class);
+
+                startActivityForResult(intentMaps,MAPS_CODE);
+
+            }
+        });
+
     }
 
 
@@ -88,6 +105,9 @@ public class CreateIncidenceActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
+        } else if (resultCode==RESULT_OK && requestCode==MAPS_CODE){
+            latitud = data.getStringExtra("latitud");
+            longitud = data.getStringExtra("longitud");
         }
 
     }
@@ -110,62 +130,62 @@ public class CreateIncidenceActivity extends AppCompatActivity {
 
         // PARAMETROS QUE FALTAN CONFIGURAR
         //incidence.setImage("image1");   //Esto se setea líneas más abajo.
-        incidence.setLocation("xyz o latitud+longitud");
+        if (longitud != null && latitud != null) {
+            incidence.setLocation("xyz o latitud+longitud");
 
-        // Guardar incidencia en DB
-        DatabaseReference path = databaseReference.child(userId + "/incidences/").push(); // configurar la ruta para imprimir en DB
-        String incidenceId = path.getKey(); // obtenemos el instanceId del push
-        incidence.setIncidenceId(incidenceId);
-        path.setValue(incidence)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            // Guardar incidencia en DB
+            DatabaseReference path = databaseReference.child(userId + "/incidences/").push(); // configurar la ruta para imprimir en DB
+            String incidenceId = path.getKey(); // obtenemos el instanceId del push
+            incidence.setIncidenceId(incidenceId);
+            path.setValue(incidence)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("incidenceSaveSuccess", "Guardado de incidencia exitoso"); // si se guardó exitosamente
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("incidenceSaveFail", "Guardado de incidencia fallido", e.getCause()); // si hubo error al guardar
+                        }
+                    });
+
+            // Usaremos putBytes para subir nuestra imagen.
+            imageView.setDrawingCacheEnabled(true);
+            imageView.buildDrawingCache();
+            Bitmap bitmapImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+
+            StorageReference imageIncidence = storageReference.child("incidences/" + incidenceId);
+            StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("userId", userId).build();
+
+            UploadTask uploadTask = imageIncidence.putBytes(data, metadata);
+
+            // PENDIENTE AGREGAR PROGRESO DE SUBIDA!!!! OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d("incidenceSaveSuccess","Guardado de incidencia exitoso"); // si se guardó exitosamente
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("infoApp", "subido exitoso");
                 }
-            })
-            .addOnFailureListener(new OnFailureListener() {
+            }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.e("incidenceSaveFail","Guardado de incidencia fallido",e.getCause()); // si hubo error al guardar
+                    Log.d("infoApp", "subido erróneoooooooooooooooooooooo");
                 }
             });
 
-        // Usaremos putBytes para subir nuestra imagen.
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap bitmapImage =((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG,100,baos);
-        byte [] data = baos.toByteArray();
 
-
-        StorageReference imageIncidence = storageReference.child("incidences/"+incidenceId);
-        StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("userId",userId).build();
-
-        UploadTask uploadTask = imageIncidence.putBytes(data,metadata);
-
-        // PENDIENTE AGREGAR PROGRESO DE SUBIDA!!!! OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d("infoApp","subido exitoso");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("infoApp","subido erróneoooooooooooooooooooooo");
-            }
-        });
-
-
-
-
-
-
-        // Regresar a ListIncidencesActivity
-        intentListIncidences();
-
+            // Regresar a ListIncidencesActivity
+            intentListIncidences();
+        } else {
+            Toast.makeText(this, "Debe ingresar una ubicación", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
