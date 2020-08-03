@@ -50,8 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateIncidenceActivity"
-            android:parentActivityName=".activities.ListIncidencesActivity" />
+            android:name=".activities.CreateIncidenceActivity" />
         <activity android:name=".MainActivity" />
     </application>
 
