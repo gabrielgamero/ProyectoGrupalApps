@@ -39,7 +39,7 @@
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".activities.CreateIncidenceActivity" />
-        <activity android:name=".activities.ViewIncidenceActivity" />
+        <activity android:name=".activities.ViewIncidenceActivity" android:parentActivityName=".activities.ListIncidencesActivity" />
         <activity android:name=".activities.ListIncidencesActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity">
@@ -51,7 +51,7 @@
         </activity>
         <activity
             android:name=".activities.CreateIncidenceActivity"
-            android:parentActivityName=".activities.ListIncidencesActivity" />
+             />
         <activity android:name=".MainActivity" />
     </application>
 
