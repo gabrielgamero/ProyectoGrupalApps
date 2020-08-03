@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     // Button
     Button btnLogin;
     TextView registerUser;
+    ImageView imageView;
 
     // Firebase Authentication
     FireUser fireUser;
@@ -64,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        imageView = findViewById(R.id.imageView);
 
     }
 

@@ -8,4 +8,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="buttonMap">Enviar ubicación de incidencia</string>
     <string name="marker_detail_latlng">(%1$.5f, %2$.5f)</string>
+    <string name="title_activity_mapita">Map</string>
 </resources>

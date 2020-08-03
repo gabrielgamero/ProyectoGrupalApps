@@ -1,6 +1,7 @@
 package pucp.telecom.moviles.incidencias.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ public class ViewIncidenceActivity extends AppCompatActivity {
     EditText editTextIncidenceComment;
     Switch switchAttendIncidence;
     String incidenceStatus;
+    String incidenceLocation;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -43,6 +46,13 @@ public class ViewIncidenceActivity extends AppCompatActivity {
 
     String incidenceOwnerSelected;
 
+
+
+
+    private static final int MAPS_VIEW_INCIDENCE = 10;
+    Button abrirMaps;
+    String latitud;
+    String longitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,12 @@ public class ViewIncidenceActivity extends AppCompatActivity {
             incidenceDescriptionSelected = extras.getString("incidenceDescriptionSelected");
             incidenceStatusSelected = extras.getString("incidenceStatusSelected");
             incidenceCommentSelected = extras.getString("incidenceCommentSelected");
+            incidenceLocation = extras.getString("incidenceLocation");
+
+            String[]ubicacion= incidenceLocation.split(",");
+            latitud = ubicacion[0];
+            longitud = ubicacion[1];
+
             rol = extras.getString("rol");
             incidenceOwnerSelected = extras.getString("incidenceOwnerSelected");
             if (rol.equalsIgnoreCase("U")) {
@@ -76,6 +92,21 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         setIncidenceValues(); // Configurar valores pasados de ListIncidencesActivity
         switchStatusIncidence(); // Switch para cambiar estado de incidencia entre "registrado" y "atendido"
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        //Se abrirá el mapa con la ubicación de la incidencia como marker y la ubicación que se actualiza automáticamente
+        abrirMaps = (Button)findViewById(R.id.abrirMaps);
+        abrirMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMapaView = new Intent (ViewIncidenceActivity.this,MapitaActivity.class);
+                intentMapaView.putExtra("latitud",latitud);
+                intentMapaView.putExtra("longitud",longitud);
+
+                startActivityForResult(intentMapaView,MAPS_VIEW_INCIDENCE);
+            }
+        });
+
     }
 
     // Configurar valores pasados de ListIncidencesActivity
@@ -154,6 +185,16 @@ public class ViewIncidenceActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == MAPS_VIEW_INCIDENCE){
+
+        }
+
     }
 
 }

@@ -131,7 +131,7 @@ public class CreateIncidenceActivity extends AppCompatActivity {
         // PARAMETROS QUE FALTAN CONFIGURAR
         //incidence.setImage("image1");   //Esto se setea líneas más abajo.
         if (longitud != null && latitud != null) {
-            incidence.setLocation("xyz o latitud+longitud");
+            incidence.setLocation(latitud+","+longitud);
 
 
             // Guardar incidencia en DB

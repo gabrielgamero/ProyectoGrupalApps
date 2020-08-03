@@ -184,6 +184,7 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 String incidenceStatusSelected = incidenceSelected.getStatus();
                 String incidenceCommentSelected = incidenceSelected.getComment();
                 String incidenceOwnerSelected = incidenceSelected.getUserId();
+                String incidenceLocation = incidenceSelected.getLocation();
 
                 Intent intent = new Intent(ListIncidencesActivity.this, ViewIncidenceActivity.class);
                 intent.putExtra("incidenceIdSelected", incidenceIdSelected);
@@ -191,6 +192,7 @@ public class ListIncidencesActivity extends AppCompatActivity {
                 intent.putExtra("incidenceDescriptionSelected", incidenceDescriptionSelected);
                 intent.putExtra("incidenceStatusSelected", incidenceStatusSelected);
                 intent.putExtra("incidenceCommentSelected", incidenceCommentSelected);
+                intent.putExtra("incidenceLocation",incidenceLocation);
 
                 intent.putExtra("rol", rol);
                 intent.putExtra("incidenceOwnerSelected", incidenceOwnerSelected);

@@ -33,8 +33,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".activities.MapitaActivity"
+            android:label="@string/title_activity_mapita"></activity>
+        <activity
             android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps" android:parentActivityName=".activities.CreateIncidenceActivity"></activity>
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".activities.CreateIncidenceActivity" />
         <activity android:name=".activities.ViewIncidenceActivity" />
         <activity android:name=".activities.ListIncidencesActivity" />
         <activity android:name=".activities.RegisterActivity" />
@@ -45,7 +49,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CreateIncidenceActivity" android:parentActivityName=".activities.ListIncidencesActivity" />
+        <activity
+            android:name=".activities.CreateIncidenceActivity"
+            android:parentActivityName=".activities.ListIncidencesActivity" />
         <activity android:name=".MainActivity" />
     </application>
 
